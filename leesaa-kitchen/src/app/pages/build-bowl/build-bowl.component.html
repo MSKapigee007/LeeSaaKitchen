@@ -7,20 +7,34 @@
 </section>
 
 <!-- Success Modal / Banner -->
-<section class="success-banner" *ngIf="orderAdded">
+<section class="success-banner" *ngIf="orderPlaced">
   <div class="container">
     <div class="success-box">
       <span class="success-icon">🎉</span>
-      <h2>Your Custom Bowl is Ready!</h2>
-      <p>We've crafted your personalized NutriBowl combination. You can show this custom recipe at checkout in-store or place an order via WhatsApp.</p>
+      <h2>Custom Bowl Order Placed Successfully!</h2>
+      <p class="order-id-highlight">Unique Order ID: <strong>#{{ bowlOrderId }}</strong></p>
+      <p class="order-confirm-sub">Your custom NutriBowl order has been logged directly to our kitchen orders sheet. We're prepping it fresh for you!</p>
+      
       <div class="summary-pills">
         <span class="pill" *ngIf="selectedBase"><strong>Base:</strong> {{ selectedBase.name }}</span>
         <span class="pill" *ngFor="let p of selectedProteins"><strong>Protein:</strong> {{ p.name }}</span>
         <span class="pill" *ngIf="selectedCheese && selectedCheese.name !== 'No Cheese'"><strong>Cheese:</strong> {{ selectedCheese.name }}</span>
+        <span class="pill" *ngIf="selectedVeggies.length > 0"><strong>Veggies:</strong> {{ selectedVeggies.length }} selected</span>
+        <span class="pill" *ngIf="selectedSauces.length > 0"><strong>Sauces:</strong> {{ selectedSauces.length }} selected</span>
       </div>
+
+      <div class="order-details-card">
+        <p><strong>Customer:</strong> {{ checkoutForm.value.name }} ({{ checkoutForm.value.phone }})</p>
+        <p><strong>Service:</strong> {{ checkoutForm.value.deliveryType === 'delivery' ? 'Doorstep Delivery' : 'In-Store Pickup (3221 Wrightsboro Rd, Augusta, GA)' }}</p>
+        <p *ngIf="checkoutForm.value.deliveryType === 'delivery'"><strong>Delivery Address:</strong> {{ checkoutForm.value.address }}</p>
+        <p><strong>Total Charged:</strong> ${{ (checkoutForm.value.deliveryType === 'delivery' ? calculateTotal() + 5 : calculateTotal()) | number:'1.2-2' }}</p>
+      </div>
+
+      <p class="call-note">Questions about your order? Call us at <strong>+1 (706) 925-2583</strong> or email <strong>leesasgrill&#64;gmail.com</strong></p>
+
       <div class="success-actions">
         <button (click)="resetBowl()" class="btn btn-secondary">Build Another Bowl</button>
-        <a routerLink="/order" class="btn btn-primary">Proceed to Checkout (${{ calculateTotal() | number:'1.2-2' }})</a>
+        <a routerLink="/menu" class="btn btn-primary">Explore Full Menu</a>
       </div>
     </div>
   </div>
@@ -262,6 +276,73 @@
           </div>
         </div>
 
+        <!-- 8. FINALIZE & ORDER -->
+        <div class="step-card" id="checkout-step">
+          <div class="step-header">
+            <div class="step-badge">8</div>
+            <div>
+              <span class="step-sub">Delivery & Contact</span>
+              <h2>FINALIZE YOUR BOWL ORDER</h2>
+              <p class="step-hint">Enter your details to log this custom bowl directly with our kitchen</p>
+            </div>
+          </div>
+
+          <form [formGroup]="checkoutForm" (ngSubmit)="submitBowlOrder()" class="bowl-checkout-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" formControlName="name" placeholder="Your full name">
+                <span class="error" *ngIf="checkoutForm.get('name')?.touched && checkoutForm.get('name')?.invalid">Name is required</span>
+              </div>
+              <div class="form-group">
+                <label>Phone / WhatsApp *</label>
+                <input type="tel" formControlName="phone" placeholder="+1 (706) 555-0123">
+                <span class="error" *ngIf="checkoutForm.get('phone')?.touched && checkoutForm.get('phone')?.invalid">Phone is required</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" formControlName="email" placeholder="your&#64;email.com">
+              <span class="error" *ngIf="checkoutForm.get('email')?.touched && checkoutForm.get('email')?.invalid">Valid email is required</span>
+            </div>
+
+            <div class="form-group">
+              <label>Order Fulfillment</label>
+              <div class="delivery-toggle-group">
+                <label class="toggle-option">
+                  <input type="radio" formControlName="deliveryType" value="pickup">
+                  <span>🥡 In-Store Pickup (Free)</span>
+                </label>
+                <label class="toggle-option">
+                  <input type="radio" formControlName="deliveryType" value="delivery">
+                  <span>🚗 Doorstep Delivery (+$5.00)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group" *ngIf="checkoutForm.value.deliveryType === 'delivery'">
+              <label>Delivery Address in Augusta, GA *</label>
+              <input type="text" formControlName="address" placeholder="3221 Wrightsboro Rd, Suite B, Augusta, GA">
+            </div>
+
+            <div class="form-group">
+              <label>Special Instructions / Allergy Notes</label>
+              <textarea formControlName="specialInstructions" rows="2" placeholder="e.g. Extra spicy, sauce on the side, plastic cutlery needed..."></textarea>
+            </div>
+
+            <div class="checkout-submit-wrapper">
+              <button
+                type="submit"
+                class="btn btn-primary btn-submit-bowl"
+                [disabled]="!canSubmit() || isSubmitting"
+              >
+                {{ isSubmitting ? 'Logging Order to Kitchen...' : 'Place Custom Bowl Order - $' + ((checkoutForm.value.deliveryType === 'delivery' ? calculateTotal() + 5 : calculateTotal()) | number:'1.2-2') }}
+              </button>
+            </div>
+          </form>
+        </div>
+
       </div>
 
       <!-- Live Order Summary Sticky Sidebar -->
@@ -335,9 +416,9 @@
             <button
               class="btn btn-primary btn-full"
               [disabled]="!canSubmit()"
-              (click)="addBowlToOrder()"
+              (click)="proceedToCheckout()"
             >
-              {{ canSubmit() ? 'Complete & Order Bowl' : 'Pick Base & Protein to Continue' }}
+              {{ canSubmit() ? 'Proceed to Order Bowl ($' + (calculateTotal() | number:'1.2-2') + ')' : 'Pick Base & Protein to Continue' }}
             </button>
             <p class="help-note">⚡ Made fresh to order in-store or for doorstep delivery in Augusta, GA</p>
           </div>

@@ -4,31 +4,31 @@
  *
  * SPREADSHEET ID: 1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4
  *
- * HOW TO ATTACH AND DEPLOY:
- * 1. Open your Google Sheet: https://docs.google.com/spreadsheets/d/1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4/edit?gid=0#gid=0
- * 2. In Row 1, set up the columns:
- *    Col A: Order ID
- *    Col B: Timestamp
- *    Col C: Customer Name
- *    Col D: Phone
- *    Col E: Email
- *    Col F: Delivery Type
- *    Col G: Address
- *    Col H: Items Summary
- *    Col I: Subtotal ($)
- *    Col J: Total ($)
- *    Col K: Notes
- * 3. In the top menu, click Extensions -> Apps Script.
- * 4. Paste all of this code into Code.gs (replacing any sample code).
- * 5. Click "Deploy" (blue button at top right) -> "New deployment".
- * 6. Click the gear icon next to "Select type" and choose "Web app".
- * 7. Set:
- *      Description: LeeSa's Grill Orders
- *      Execute as: Me
- *      Who has access: Anyone
- * 8. Click "Deploy" and Authorize access.
- * 9. Copy the Web App URL (starts with https://script.google.com/macros/s/...)
- * 10. You're done! Orders from the website will automatically stream into this spreadsheet.
+ * ALL ORDERS SUPPORTED:
+ * 1. Online Food Orders (Regular menu cart)
+ * 2. Build Your Bowl Orders (Custom NutriBowls with Base, Proteins, Add-Ons, Cheese, Veggies, Sauces, Seasoning)
+ * 3. Catering Orders (Event catering, tray requests, guest counts & date)
+ *
+ * RECOMMENDED HEADERS FOR ROW 1 OF YOUR GOOGLE SHEET:
+ * Col A: Order ID
+ * Col B: Timestamp
+ * Col C: Order Type (Online Order / Build Your Bowl / Catering Order)
+ * Col D: Customer Name
+ * Col E: Phone
+ * Col F: Email
+ * Col G: Delivery Type / Event Info
+ * Col H: Delivery Address / Venue
+ * Col I: Order Details / Bowl Recipe / Tray Package
+ * Col J: Subtotal ($)
+ * Col K: Total ($)
+ * Col L: Special Instructions / Notes
+ *
+ * HOW TO DEPLOY:
+ * 1. In your Google Sheet, click Extensions -> Apps Script.
+ * 2. Replace Code.gs with this exact file.
+ * 3. Click "Deploy" (top right) -> "New deployment" -> Select "Web app".
+ * 4. Execute as: "Me", Who has access: "Anyone".
+ * 5. Click "Deploy" and Authorize.
  */
 
 var SPREADSHEET_ID = "1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4";
@@ -39,15 +39,22 @@ function doPost(e) {
     var sheet = ss.getActiveSheet();
     var data = JSON.parse(e.postData.contents);
 
-    // Append row with order details
+    // Format event details if catering
+    var deliveryOrEvent = data.deliveryType || 'Delivery';
+    if (data.eventDate) {
+      deliveryOrEvent += " (Date: " + data.eventDate + " | Guests: " + (data.guestsCount || 'N/A') + ")";
+    }
+
+    // Append full order row
     sheet.appendRow([
       data.orderId || '',
       data.orderTimestamp || new Date().toLocaleString(),
+      data.orderType || 'Online Order',
       data.customerName || '',
       data.phone || '',
       data.email || '',
-      data.deliveryType || 'delivery',
-      data.address || '',
+      deliveryOrEvent,
+      data.address || 'N/A',
       data.itemsSummary || '',
       data.subtotal || 0,
       data.total || 0,
@@ -58,6 +65,7 @@ function doPost(e) {
       .createTextOutput(JSON.stringify({
         status: 'success',
         orderId: data.orderId,
+        orderType: data.orderType,
         spreadsheetId: SPREADSHEET_ID
       }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -72,5 +80,5 @@ function doPost(e) {
 }
 
 function doGet(e) {
-  return ContentService.createTextOutput("LeeSa's Grill Order Logging API for Sheet 1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4 is ACTIVE.");
+  return ContentService.createTextOutput("LeeSa's Grill Order & Catering API is ACTIVE for Sheet: " + SPREADSHEET_ID);
 }

@@ -508,4 +508,146 @@
   .page-hero h1 {
     font-size: 2.2rem;
   }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Bowl Checkout Form */
+.bowl-checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.85rem 1rem;
+  border: 1.5px solid #e0d8cf;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(212, 69, 26, 0.12);
+}
+
+.delivery-toggle-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.toggle-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.2rem;
+  border: 1.5px solid #e0d8cf;
+  border-radius: 10px;
+  cursor: pointer;
+  background: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.toggle-option:hover {
+  border-color: var(--primary);
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.checkout-submit-wrapper {
+  margin-top: 0.8rem;
+}
+
+.btn-submit-bowl {
+  width: 100%;
+  padding: 1.1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--primary);
+  color: white;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-submit-bowl:hover:not(:disabled) {
+  background: var(--primary-dark, #b33913);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(212, 69, 26, 0.3);
+}
+
+.btn-submit-bowl:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.order-id-highlight {
+  font-size: 1.25rem;
+  background: #FFF4EE;
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  border: 1.5px dashed var(--primary);
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.order-confirm-sub {
+  color: #555;
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-details-card {
+  background: #faf8f5;
+  border-radius: 12px;
+  padding: 1.4rem;
+  margin: 1.5rem 0;
+  text-align: left;
+  border: 1px solid #e8e0d6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.call-note {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1.5rem;
 }

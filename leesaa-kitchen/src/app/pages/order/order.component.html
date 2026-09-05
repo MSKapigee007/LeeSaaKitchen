@@ -6,6 +6,16 @@
 
     <div class="order-layout" [class.cart-open]="showCart">
       <div class="order-menu">
+        <div class="order-nav-banner">
+          <a routerLink="/build-your-bowl" class="banner-pill">
+            <span>🥣 Build Your Custom NutriBowl</span>
+            <span class="pill-arrow">Customize →</span>
+          </a>
+          <a routerLink="/catering" class="banner-pill">
+            <span>🍱 Request Large Event Catering</span>
+            <span class="pill-arrow">Catering Guide →</span>
+          </a>
+        </div>
         <div class="search-bar"><span class="search-icon">🔍</span><input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search menu..." class="search-input"></div>
         <div class="category-section" *ngFor="let category of filteredCategories">
           <div class="category-header"><span>{{ category.icon }}</span><h2>{{ category.name }}</h2></div>

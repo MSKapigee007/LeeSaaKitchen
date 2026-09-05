@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { MenuService } from '../../services/menu.service';
 import { GoogleSheetsService, OrderLogPayload } from '../../services/google-sheets.service';
 import { MenuCategory, MenuItem } from '../../models/menu-item.model';
@@ -14,7 +15,7 @@ interface CartItem {
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MenuCardComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, MenuCardComponent],
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
@@ -46,7 +47,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categories = this.menuService.getCategories().filter(c => c.name !== 'Catering Packages');
+    this.categories = this.menuService.getCategories();
     this.filteredCategories = [...this.categories];
   }
 
@@ -81,8 +82,12 @@ export class OrderComponent implements OnInit {
       const subtotal = this.getCartTotal();
       const total = subtotal + 5.00;
 
+      const hasCatering = this.cart.some(c => c.item.name.toLowerCase().includes('tray') || c.item.name.toLowerCase().includes('catering'));
+      const orderType: 'Online Food Order' | 'Catering Order' = hasCatering ? 'Catering Order' : 'Online Food Order';
+
       const payload: OrderLogPayload = {
         orderId: this.orderNumber,
+        orderType: orderType,
         customerName: this.checkoutForm.value.name,
         phone: this.checkoutForm.value.phone,
         email: this.checkoutForm.value.email,

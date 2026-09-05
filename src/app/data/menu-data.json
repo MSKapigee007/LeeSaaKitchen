@@ -614,6 +614,97 @@
           "tags": ["dessert", "custard", "vegetarian"]
         }
       ]
+    },
+    {
+      "name": "Party & Catering Trays",
+      "icon": "🍱",
+      "type": "all",
+      "items": [
+        {
+          "name": "Hyderabadi Chicken Dum Biryani (Half Tray - 10-15 Pax)",
+          "description": "Slow-cooked authentic saffron basmati rice layered with spiced tender halal chicken. Includes mirchi ka salan and cooling raita. Feeds 10-15 guests.",
+          "price": 95.0,
+          "isHalal": true,
+          "isPopular": true,
+          "tags": ["catering", "biryani", "halal", "half tray", "popular"]
+        },
+        {
+          "name": "Hyderabadi Chicken Dum Biryani (Full Tray - 25-30 Pax)",
+          "description": "Full party tray of authentic Hyderabadi chicken dum biryani with salan and raita. Feeds 25-30 guests.",
+          "price": 180.0,
+          "isHalal": true,
+          "isPopular": true,
+          "tags": ["catering", "biryani", "halal", "full tray"]
+        },
+        {
+          "name": "Hyderabadi Mutton Dum Biryani (Half Tray - 10-15 Pax)",
+          "description": "Rich, tender bone-in halal goat/mutton dum biryani slow cooked in traditional Hyderabadi spices. Feeds 10-15 guests.",
+          "price": 140.0,
+          "isHalal": true,
+          "isPopular": true,
+          "tags": ["catering", "biryani", "halal", "mutton", "half tray"]
+        },
+        {
+          "name": "Hyderabadi Mutton Dum Biryani (Full Tray - 25-30 Pax)",
+          "description": "Full celebratory tray of tender goat dum biryani with salan and raita. Feeds 25-30 guests.",
+          "price": 260.0,
+          "isHalal": true,
+          "tags": ["catering", "biryani", "halal", "mutton", "full tray"]
+        },
+        {
+          "name": "Chicken 65 Party Tray (Half Tray - 10-15 Pax)",
+          "description": "Spicy, deep-fried halal chicken bites tossed with fresh curry leaves, yogurt, and fiery chilies. Perfect party appetizer for 10-15 guests.",
+          "price": 100.0,
+          "isHalal": true,
+          "isPopular": true,
+          "tags": ["catering", "appetizer", "halal", "half tray", "popular"]
+        },
+        {
+          "name": "Chicken 65 Party Tray (Full Tray - 25-30 Pax)",
+          "description": "Full party appetizer tray of authentic crispy Hyderabadi Chicken 65. Feeds 25-30 guests.",
+          "price": 180.0,
+          "isHalal": true,
+          "tags": ["catering", "appetizer", "halal", "full tray"]
+        },
+        {
+          "name": "Grilled Chicken Drumsticks (50 Pieces Party Tray)",
+          "description": "50 juicy grilled halal chicken drumsticks marinated in aromatic spices and smoky herbs.",
+          "price": 100.0,
+          "isHalal": true,
+          "isPopular": true,
+          "tags": ["catering", "appetizer", "halal", "grilled"]
+        },
+        {
+          "name": "Paneer Butter Masala (Half Tray - 10-15 Pax)",
+          "description": "Rich, creamy cottage cheese curry in velvety spiced tomato butter gravy. Feeds 10-15 guests.",
+          "price": 80.0,
+          "isVegetarian": true,
+          "isPopular": true,
+          "tags": ["catering", "vegetarian", "curry", "half tray"]
+        },
+        {
+          "name": "Paneer Butter Masala (Full Tray - 25-30 Pax)",
+          "description": "Full party tray of rich paneer butter masala. Feeds 25-30 guests.",
+          "price": 150.0,
+          "isVegetarian": true,
+          "tags": ["catering", "vegetarian", "curry", "full tray"]
+        },
+        {
+          "name": "Medu Vada Party Pack (30 Pieces)",
+          "description": "30 golden crisp South Indian lentil donuts served with coconut chutney and fresh sambar.",
+          "price": 60.0,
+          "isVegetarian": true,
+          "tags": ["catering", "tiffin", "vegetarian"]
+        },
+        {
+          "name": "Double Ka Meetha (Half Tray - 10-15 Pax)",
+          "description": "Royal Hyderabadi fried bread sweet soaked in saffron rabri and garnished with nuts. Feeds 10-15 guests.",
+          "price": 90.0,
+          "isVegetarian": true,
+          "isPopular": true,
+          "tags": ["catering", "dessert", "vegetarian", "half tray"]
+        }
+      ]
     }
   ]
 }

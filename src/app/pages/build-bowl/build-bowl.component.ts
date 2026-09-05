@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { GoogleSheetsService, OrderLogPayload } from '../../services/google-sheets.service';
 
 interface OptionItem {
   name: string;
@@ -28,13 +29,18 @@ interface StepSection {
 @Component({
   selector: 'app-build-bowl',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './build-bowl.component.html',
   styleUrls: ['./build-bowl.component.css']
 })
 export class BuildBowlComponent {
   baseBowlPrice = 11.99;
   orderAdded = false;
+  orderPlaced = false;
+  isSubmitting = false;
+  bowlOrderId = '';
+  showCheckoutStep = false;
+  checkoutForm!: FormGroup;
 
   // Selected state
   selectedBase: OptionItem | null = null;
@@ -98,57 +104,56 @@ export class BuildBowlComponent {
       id: 'cheese',
       stepNum: 4,
       title: 'Cheese',
-      heading: 'SAY CHEESE 🧀',
-      subtitle: 'Indo-American fusion cheesy touch (Select 1 or none)',
+      heading: 'CHOOSE YOUR CHEESE',
+      subtitle: 'Pick 1 melted or grated finish',
       type: 'single',
       items: [
-        { name: 'Shredded Monterey Jack & Cheddar', desc: 'Classic melted American blend', icon: '🧀', isVegetarian: true },
-        { name: 'Crumbled Indian Paneer', desc: 'Mild and creamy freshly crumbled paneer', icon: '🤍', isVegetarian: true, isPopular: true },
-        { name: 'Spicy Ghost Pepper Jack', desc: 'For those who want an extra spicy kick', icon: '🌶️', isVegetarian: true },
-        { name: 'No Cheese', desc: 'Keep it light & dairy-free', icon: '🚫' }
+        { name: 'Shredded Pepper Jack', desc: 'Zesty, spicy melted kick', icon: '🌶️', isVegetarian: true, isPopular: true },
+        { name: 'Cheddar & Mozzarella Blend', desc: 'Classic golden gooey blend', icon: '🧀', isVegetarian: true },
+        { name: 'Crumbled Paneer / Feta', desc: 'Fresh mild crumbly cheese', icon: '🥛', isVegetarian: true },
+        { name: 'No Cheese (Dairy-Free)', desc: 'Keep it clean and light', icon: '🌱', isVegetarian: true }
       ]
     },
     {
       id: 'veggies',
       stepNum: 5,
       title: 'Veggies',
-      heading: 'LOAD UP THE VEGGIES',
-      subtitle: 'Fresh, crunchy, and pickled toppings (Select up to 4)',
+      heading: 'FRESH TOPPINGS & GREENS',
+      subtitle: 'Choose up to 4 garden fresh crisp veggies',
       type: 'multiple',
       maxSelect: 4,
       items: [
-        { name: 'Pickled Red Onions (Lachha)', icon: '🧅', isVegetarian: true, isPopular: true },
-        { name: 'Diced Cucumbers & Roma Tomatoes', icon: '🥒', isVegetarian: true },
-        { name: 'Roasted Sweet Corn with Chaat Masala', icon: '🌽', isVegetarian: true, isPopular: true },
-        { name: 'Sauteed Bell Peppers & Onions', icon: '🫑', isVegetarian: true },
-        { name: 'Spicy Jalapeño / Green Chilies', icon: '🌶️', isVegetarian: true },
-        { name: 'Shredded Carrots & Cabbage Slaw', icon: '🥕', isVegetarian: true },
-        { name: 'Fresh Baby Spinach', icon: '🍃', isVegetarian: true }
+        { name: 'Pickled Red Onions', desc: 'Tangy homemade spiced crunch', icon: '🧅', isVegetarian: true, isPopular: true },
+        { name: 'Cucumber & Tomato Kachumber', desc: 'Diced salad with lemon herb dressing', icon: '🥒', isVegetarian: true, isPopular: true },
+        { name: 'Sweet Charred Corn', desc: 'Roasted corn kernels with chaat herbs', icon: '🌽', isVegetarian: true },
+        { name: 'Shredded Carrots & Cabbage', desc: 'Crisp slaw tossed with mustard seeds', icon: '🥕', isVegetarian: true },
+        { name: 'Tandoori Roasted Bell Peppers', desc: 'Charred tri-color capsicum', icon: '🫑', isVegetarian: true },
+        { name: 'Baby Spinach Leaves', desc: 'Tender fresh nutrient greens', icon: '🥬', isVegetarian: true }
       ]
     },
     {
-      id: 'sauces',
+      id: 'sauce',
       stepNum: 6,
       title: 'Sauces',
-      heading: 'DRIZZLE & DRESS',
-      subtitle: 'Signature homemade dressings & chutneys (Select up to 3)',
+      heading: 'SAUCED & FLAVORED',
+      subtitle: 'Pick up to 3 house signature sauces',
       type: 'multiple',
       maxSelect: 3,
       items: [
-        { name: 'Makhani / Butter Chicken Sauce', desc: 'Rich, creamy mild tomato butter sauce', icon: '🍛', isPopular: true },
-        { name: 'Cool Mint & Cilantro Chutney', desc: 'Fresh refreshing herbal kick', icon: '🌿', isVegetarian: true, isPopular: true },
-        { name: 'Sweet Tamarind Date Glaze', desc: 'Tangy and sweet traditional reduction', icon: '🍯', isVegetarian: true },
-        { name: 'Spicy Chili Garlic Mayo', desc: 'Indo-American creamy garlic heat', icon: '🌶️' },
-        { name: 'Cool Cucumber Raita', desc: 'Wholesome seasoned yogurt drizzle', icon: '🥛', isVegetarian: true },
-        { name: 'Fiery Andhra Karam Chutney', desc: 'Spicy South Indian red chili relish', icon: '🔥', isVegetarian: true }
+        { name: 'Creamy Tikka Masala Gravy', desc: 'Rich, mildly spiced tomato butter cream sauce', icon: '🥫', isVegetarian: true, isPopular: true },
+        { name: 'Fiery Mirchi Ka Salan', desc: 'Hyderabadi nutty sesame-peanut chili sauce', icon: '🔥', isVegetarian: true, isPopular: true },
+        { name: 'Mint & Cilantro Chutney', desc: 'Bright, herbaceous cool and tangy punch', icon: '🌿', isVegetarian: true },
+        { name: 'Sweet & Tangy Tamarind Glaze', desc: 'Classic date-tamarind soothing sweetness', icon: '🍯', isVegetarian: true },
+        { name: 'Cooling Cucumber Raita', desc: 'Whipped whole milk yogurt with cumin & herbs', icon: '🥣', isVegetarian: true },
+        { name: 'Spicy Garlic Chili Mayo', desc: 'Creamy garlic sauce with spicy red chili', icon: '🌶️', isVegetarian: true }
       ]
     },
     {
       id: 'seasoning',
       stepNum: 7,
-      title: 'Seasoning',
-      heading: 'FINISH WITH FLAVOR',
-      subtitle: 'The finishing aromatic flourish (Select up to 2)',
+      title: 'Finishing',
+      heading: 'THE FINAL TOUCH',
+      subtitle: 'Choose up to 2 artisanal seasoning & crunch toppers',
       type: 'multiple',
       maxSelect: 2,
       items: [
@@ -161,9 +166,21 @@ export class BuildBowlComponent {
     }
   ];
 
-  constructor() {
+  constructor(
+    private fb: FormBuilder,
+    private sheetsService: GoogleSheetsService
+  ) {
     // Default select first base
     this.selectedBase = this.sections[0].items[0];
+    this.bowlOrderId = this.sheetsService.generateOrderId('BWL');
+    this.checkoutForm = this.fb.group({
+      name: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      deliveryType: ['pickup'],
+      address: [''],
+      specialInstructions: ['']
+    });
   }
 
   selectBase(item: OptionItem) {
@@ -274,10 +291,61 @@ export class BuildBowlComponent {
     return !!this.selectedBase && this.selectedProteins.length > 0;
   }
 
-  addBowlToOrder() {
+  proceedToCheckout() {
     if (this.canSubmit()) {
+      this.showCheckoutStep = true;
+      setTimeout(() => {
+        const checkoutEl = document.getElementById('checkout-step');
+        if (checkoutEl) {
+          checkoutEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
+    }
+  }
+
+  getIngredientsSummary(): string {
+    const parts: string[] = [];
+    if (this.selectedBase) parts.push(`Base: ${this.selectedBase.name}`);
+    if (this.selectedProteins.length) parts.push(`Protein: ${this.selectedProteins.map(p => p.name).join(', ')}`);
+    if (this.selectedAddOns.length) parts.push(`Add-ons: ${this.selectedAddOns.map(a => `${a.name} (+$${a.price})`).join(', ')}`);
+    if (this.selectedCheese && this.selectedCheese.name !== 'No Cheese') parts.push(`Cheese: ${this.selectedCheese.name}`);
+    if (this.selectedVeggies.length) parts.push(`Veggies: ${this.selectedVeggies.map(v => v.name).join(', ')}`);
+    if (this.selectedSauces.length) parts.push(`Sauces: ${this.selectedSauces.map(s => s.name).join(', ')}`);
+    if (this.selectedSeasoning.length) parts.push(`Finishing: ${this.selectedSeasoning.map(sn => sn.name).join(', ')}`);
+    return parts.join(' | ');
+  }
+
+  async submitBowlOrder() {
+    if (this.checkoutForm.valid && this.canSubmit()) {
+      this.isSubmitting = true;
+      const formVal = this.checkoutForm.value;
+      const subtotal = this.calculateTotal();
+      const total = formVal.deliveryType === 'delivery' ? subtotal + 5.00 : subtotal;
+      const itemsSummary = `Custom NutriBowl: ${this.getIngredientsSummary()}`;
+
+      const payload: OrderLogPayload = {
+        orderId: this.bowlOrderId,
+        orderType: 'Build Your Bowl',
+        customerName: formVal.name,
+        phone: formVal.phone,
+        email: formVal.email,
+        deliveryType: formVal.deliveryType === 'delivery' ? 'Doorstep Delivery' : 'Store Pickup',
+        address: formVal.deliveryType === 'delivery' ? (formVal.address || 'Delivery Address') : 'In-Store Pickup (3221 Wrightsboro Rd)',
+        notes: formVal.specialInstructions || 'None',
+        itemsSummary: itemsSummary,
+        subtotal: parseFloat(subtotal.toFixed(2)),
+        total: parseFloat(total.toFixed(2)),
+        orderTimestamp: new Date().toLocaleString()
+      };
+
+      await this.sheetsService.logOrderToGoogleSheets(payload);
+
+      this.isSubmitting = false;
+      this.orderPlaced = true;
       this.orderAdded = true;
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      Object.keys(this.checkoutForm.controls).forEach(k => this.checkoutForm.get(k)?.markAsTouched());
     }
   }
 
@@ -290,5 +358,16 @@ export class BuildBowlComponent {
     this.selectedSauces = [];
     this.selectedSeasoning = [];
     this.orderAdded = false;
+    this.orderPlaced = false;
+    this.showCheckoutStep = false;
+    this.bowlOrderId = this.sheetsService.generateOrderId('BWL');
+    this.checkoutForm.reset({
+      name: '',
+      phone: '',
+      email: '',
+      deliveryType: 'pickup',
+      address: '',
+      specialInstructions: ''
+    });
   }
 }
