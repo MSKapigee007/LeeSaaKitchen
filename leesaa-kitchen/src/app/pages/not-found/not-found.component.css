@@ -1,0 +1,12 @@
+.not-found { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem; background: var(--bg); }
+.container { max-width: 600px; }
+.emoji { font-size: 5rem; display: block; margin-bottom: 1rem; }
+.not-found h1 { font-family: 'Playfair Display', serif; font-size: 6rem; color: var(--primary); margin-bottom: 0.5rem; }
+.not-found h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text); margin-bottom: 1rem; }
+.not-found p { color: #777; font-size: 1.1rem; margin-bottom: 2rem; }
+.not-found-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn { display: inline-block; padding: 0.9rem 2.2rem; border-radius: 30px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: all 0.3s ease; }
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,69,26,0.35); }
+.btn-secondary { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+.btn-secondary:hover { background: var(--primary); color: white; }
