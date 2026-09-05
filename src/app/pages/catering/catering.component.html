@@ -1,0 +1,194 @@
+<section class="page-hero">
+  <div class="container">
+    <span class="section-badge">Party & Event Catering</span>
+    <h1>Augusta Cloud Kitchen <span class="highlight">Catering Services</span></h1>
+    <p>Authentic South Asian flavors for your celebrations, family gatherings, corporate lunches, and puja events. Available in convenient Half Trays & Full Trays. 100% Halal meats.</p>
+    <div class="hero-pdf-cta">
+      <a href="assets/Augusta_Cloud_Kitchen_Catering_Menu.pdf" target="_blank" class="btn btn-outline-light">
+        📄 Download Complete PDF Catering Menu
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="catering-features">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🍱</span>
+        <h3>Half & Full Trays</h3>
+        <p>Half trays comfortably feed 10-15 people; Full trays feed 25-30 people. Perfectly portioned for celebrations.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🥩</span>
+        <h3>100% Halal Meats</h3>
+        <p>All chicken, mutton/goat, and shrimp preparations follow strict halal guidelines for all our guests.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🥞</span>
+        <h3>Authentic Tiffins & Curries</h3>
+        <p>From hot Medu Vada and Mirchi Bajji to Biryanis and Royal Double Ka Meetha desserts.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <h3>Direct Social Ordering</h3>
+        <p>Contact us via WhatsApp, Instagram, or Facebook for personalized menu planning and fast response.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Catering Portions Guide -->
+<section class="tray-guide-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Portion Guide</span>
+      <h2>Catering Tray Sizes & Pricing Guide</h2>
+      <p>Reference prices extracted directly from our Augusta Cloud Kitchen Catering Menu</p>
+    </div>
+
+    <div class="tray-table-card">
+      <table class="tray-table">
+        <thead>
+          <tr>
+            <th>Menu Category</th>
+            <th>Sample Items</th>
+            <th>Single Portion</th>
+            <th>Half Tray (10-15 Pax)</th>
+            <th>Full Tray (25-30 Pax)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Veg Appetizers</strong></td>
+            <td>Cauliflower 65, Paneer 65, Onion Pakodi</td>
+            <td>$13 - $14</td>
+            <td>$60 - $70</td>
+            <td>$110 - $130</td>
+          </tr>
+          <tr>
+            <td><strong>Veg Entrees</strong></td>
+            <td>Paneer Butter Masala, Kadai Paneer, Palak Paneer</td>
+            <td>$14</td>
+            <td>$70</td>
+            <td>$130</td>
+          </tr>
+          <tr>
+            <td><strong>Dal & Sambar</strong></td>
+            <td>Tomato/Palak Dal, Dal Makhni, Sambar</td>
+            <td>—</td>
+            <td>$50 - $60</td>
+            <td>$90 - $100</td>
+          </tr>
+          <tr>
+            <td><strong>Non-Veg Appetizers</strong></td>
+            <td>Chicken 65, Apollo Fish, Fried Shrimp</td>
+            <td>$18 - $22</td>
+            <td>$100 - $110</td>
+            <td>$180 - $200</td>
+          </tr>
+          <tr>
+            <td><strong>Chicken Entrees (Halal)</strong></td>
+            <td>Butter Chicken, Chicken Tikka Masala, Murg Musallam</td>
+            <td>$14 - $16</td>
+            <td>$80 - $90</td>
+            <td>$150 - $160</td>
+          </tr>
+          <tr>
+            <td><strong>Mutton & Seafood (Halal)</strong></td>
+            <td>Mutton Curry, Shrimp Curry</td>
+            <td>$20 - $22</td>
+            <td>$120 - $140</td>
+            <td>$200 - $260</td>
+          </tr>
+          <tr>
+            <td><strong>Dum Biryanis</strong></td>
+            <td>Hyderabadi Chicken Biryani, Mutton Biryani, Paneer Biryani</td>
+            <td>$16 - $24</td>
+            <td>$90 - $150</td>
+            <td>$170 - $280</td>
+          </tr>
+          <tr>
+            <td><strong>Desserts</strong></td>
+            <td>Double ka Meetha, Kesari Halwa, Kheer, Payasam</td>
+            <td>$1.5 / pc (Jamun)</td>
+            <td>$70 - $90</td>
+            <td>$140 - $170</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Quote Request Form -->
+<section class="quote-section" id="quote">
+  <div class="container">
+    <div class="quote-grid">
+      <div class="quote-info">
+        <span class="section-badge">Plan Your Event</span>
+        <h2>Request a <span class="highlight">Custom Catering Quote</span></h2>
+        <p>Tell us your guest count and favorite dishes from our catering menu. We'll recommend tray combinations and respond quickly.</p>
+        <div class="quote-details">
+          <div class="detail"><span>💬</span> WhatsApp / Instagram / Facebook: Contact Augusta Cloud Kitchen</div>
+          <div class="detail"><span>🥩</span> All chicken, mutton, and seafood are 100% Halal</div>
+          <div class="detail"><span>🍱</span> Half trays & Full trays available for all menu categories</div>
+          <div class="detail"><span>⏰</span> 24 to 48 hour advance notice appreciated</div>
+        </div>
+      </div>
+
+      <div class="quote-form-wrapper" *ngIf="!submitted">
+        <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()" class="quote-form">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input id="name" formControlName="name" type="text" placeholder="Your name">
+            <span class="error" *ngIf="quoteForm.get('name')?.touched && quoteForm.get('name')?.invalid">Name is required</span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input id="email" formControlName="email" type="email" placeholder="your@email.com">
+            <span class="error" *ngIf="quoteForm.get('email')?.touched && quoteForm.get('email')?.invalid">Valid email required</span>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone / WhatsApp *</label>
+            <input id="phone" formControlName="phone" type="tel" placeholder="(706) 555-0000">
+            <span class="error" *ngIf="quoteForm.get('phone')?.touched && quoteForm.get('phone')?.invalid">Phone is required</span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="eventDate">Event Date *</label>
+              <input id="eventDate" formControlName="eventDate" type="date">
+              <span class="error" *ngIf="quoteForm.get('eventDate')?.touched && quoteForm.get('eventDate')?.invalid">Date is required</span>
+            </div>
+            <div class="form-group">
+              <label for="guests">Number of Guests *</label>
+              <input id="guests" formControlName="guests" type="number" min="10" placeholder="e.g. 30">
+              <span class="error" *ngIf="quoteForm.get('guests')?.touched && quoteForm.get('guests')?.invalid">Min 10 guests</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="packageType">Catering Tray Type</label>
+            <select id="packageType" formControlName="packageType">
+              <option>Combination of Half Trays</option>
+              <option>Combination of Full Trays</option>
+              <option>Hyderabadi Biryani Feast (Chicken/Mutton)</option>
+              <option>Vegetarian Special Catering</option>
+              <option>Custom Menu Selection</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="specialRequests">Dishes Desired & Dietary Notes</label>
+            <textarea id="specialRequests" formControlName="specialRequests" rows="4" placeholder="List dishes (e.g. Chicken 65, Paneer Butter Masala, Hyderabadi Dum Biryani, Double ka Meetha)..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Submit Catering Quote Request</button>
+        </form>
+      </div>
+
+      <div class="success-message" *ngIf="submitted">
+        <span class="success-icon">✅</span>
+        <h3>Quote Request Received!</h3>
+        <p>Thank you! Our Augusta Cloud Kitchen team will review your menu selections and get back to you promptly via WhatsApp or email.</p>
+      </div>
+    </div>
+  </div>
+</section>

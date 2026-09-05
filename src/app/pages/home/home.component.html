@@ -1,0 +1,173 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-brand-badge">
+      <img src="assets/images/logo.png" alt="LeeSa's Grill Logo" class="hero-logo-img">
+      <span>Augusta Cloud Kitchen • Indo-American Fusion</span>
+    </div>
+    <h1>Authentic Hyderabadi &<br><span class="highlight">South Asian Catering</span></h1>
+    <p class="hero-subtitle">Savory South Indian tiffins, authentic Hyderabadi dum biryanis, slow-cooked curries, and party trays. Made fresh to order with 100% Halal meats.</p>
+    <div class="hero-cta">
+      <a routerLink="/menu" class="btn btn-primary">Explore Full Menu</a>
+      <a routerLink="/catering" class="btn btn-outline">Catering & Trays</a>
+      <a href="assets/Augusta_Cloud_Kitchen_Catering_Menu.pdf" target="_blank" class="btn btn-pdf">📄 Download PDF Menu</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-number">40+</span>
+        <span class="stat-label">Authentic Dishes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Halal Meats</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">Half & Full</span>
+        <span class="stat-label">Catering Trays</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Notice from PDF Menu -->
+<section class="menu-highlight-bar">
+  <div class="container bar-flex">
+    <div class="bar-point"><span>🥩</span> <strong>100% Halal:</strong> All chicken, mutton/goat, and seafood preparations</div>
+    <div class="bar-point"><span>🍱</span> <strong>Catering Trays:</strong> Half Tray (10-15 people) & Full Tray (25-30 people)</div>
+    <div class="bar-point"><span>💬</span> <strong>Fast Ordering:</strong> Connect directly on WhatsApp, Instagram & Facebook</div>
+  </div>
+</section>
+
+<!-- About Preview -->
+<section class="about-preview">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image">
+        <div class="image-placeholder">
+          <img src="assets/images/logo.png" alt="LeeSa's Grill Logo" class="about-large-logo">
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="section-badge">About LeeSa's Grill</span>
+        <h2>Indo-American Fusion in <span class="highlight">Augusta, GA</span></h2>
+        <p class="lead-text">LeeSa’s Grill is an Indo-American fusion restaurant in Augusta, GA, offering delicious and wholesome NutriBowls, sandwiches, pizzas and more. We provide daily meal plans and convenient doorstep delivery. Our catering services are perfect for parties, corporate events, celebrations and gatherings, with exciting live stations featuring BBQ, Indian chaat and pani puri. Craving authentic Indian food? Order traditional favorites ranging from breakfast tiffins like idly and dosa to flavorful biryani, haleem, curries and more. Whether dining in, ordering delivery or planning an event, LeeSa’s Grill brings fresh, flavorful food to your table.</p>
+        <div class="about-action-group">
+          <a routerLink="/about" class="btn btn-secondary">Our Full Story →</a>
+          <a routerLink="/catering" class="btn btn-primary">Book Event Catering</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Build Your Bowl Feature Callout -->
+<section class="bowl-callout-section">
+  <div class="container">
+    <div class="bowl-callout-card">
+      <div class="bowl-callout-content">
+        <span class="pill-highlight">In-Store Menu & Meal Plans</span>
+        <h2>BUILD YOUR <span class="highlight">MEAL</span></h2>
+        <p>Customize wholesome NutriBowls step-by-step: Choose your base, power it up with halal proteins, say cheese, load up the veggies, drizzle sauces, and finish with flavor!</p>
+        <div class="callout-step-pills">
+          <span>1. Base</span>
+          <span>2. Protein</span>
+          <span>3. Add-Ons</span>
+          <span>4. Cheese 🧀</span>
+          <span>5. Veggies</span>
+          <span>6. Sauces</span>
+          <span>7. Seasoning</span>
+        </div>
+      </div>
+      <div class="bowl-callout-action">
+        <a routerLink="/build-your-bowl" class="btn btn-primary btn-lg">🥣 Build Your Bowl Now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Popular Dishes -->
+<section class="popular-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Chef's Recommendations</span>
+      <h2>Most Loved Catering Specials</h2>
+      <p>Signature favorites from the Augusta Cloud Kitchen catering menu</p>
+    </div>
+    <div class="popular-grid">
+      <app-menu-card *ngFor="let item of popularItems" [item]="item"></app-menu-card>
+    </div>
+    <div class="section-cta">
+      <a routerLink="/menu" class="btn btn-primary">View Full Catering Menu (All Items)</a>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">The Augusta Cloud Kitchen Difference</span>
+      <h2>Why Families & Event Hosts Choose Us</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">🥩</span>
+        <h3>100% Halal Meats</h3>
+        <p>All chicken, mutton/goat, and seafood are strictly halal certified and handled with the highest standards.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🍛</span>
+        <h3>Hyderabadi Dum Perfection</h3>
+        <p>Our biryanis and curries are slow cooked using authentic dum cooking techniques and aromatic spices.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🍱</span>
+        <h3>Party Trays for Any Size</h3>
+        <p>Choose from single orders, half trays, or full trays to cater events of 10 to 300+ guests effortlessly.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">💬</span>
+        <h3>Direct Social Ordering</h3>
+        <p>Reach out directly via WhatsApp, Instagram, or Facebook for quick quotes and menu customization.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Customer Love</span>
+      <h2>What Augusta Is Saying</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card" *ngFor="let t of testimonials">
+        <div class="stars">
+          <span *ngFor="let s of getStars(t.rating)">⭐</span>
+        </div>
+        <p class="testimonial-text">"{{ t.text }}"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">{{ t.name[0] }}</div>
+          <div>
+            <strong>{{ t.name }}</strong>
+            <span class="testimonial-date">{{ t.date }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Planning an Event or <span class="highlight">Craving Biryani?</span></h2>
+    <p>Check out our full catering menu with prices or submit a quote request for your upcoming party.</p>
+    <div class="hero-cta">
+      <a routerLink="/menu" class="btn btn-primary">Browse Catering Menu</a>
+      <a routerLink="/catering" class="btn btn-outline-light">Request Catering Quote</a>
+    </div>
+  </div>
+</section>

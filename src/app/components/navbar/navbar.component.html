@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <a routerLink="/" class="nav-logo" (click)="closeMenu()">
+      <img src="assets/images/logo.png" alt="LeeSa's Grill by Augusta Cloud Kitchen" class="logo-img">
+      <div class="logo-text-group">
+        <span class="logo-text">LeeSa's Grill</span>
+        <span class="logo-sub">by Augusta Cloud Kitchen</span>
+      </div>
+    </a>
+
+    <button class="nav-toggle" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen" aria-label="Toggle navigation">
+      <span class="hamburger" [class.active]="isMenuOpen"></span>
+    </button>
+
+    <ul class="nav-menu" [class.active]="isMenuOpen">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">Home</a></li>
+      <li><a routerLink="/menu" routerLinkActive="active" (click)="closeMenu()">Menu</a></li>
+      <li><a routerLink="/build-your-bowl" routerLinkActive="active" class="bowl-nav-link" (click)="closeMenu()">🥣 Build Your Bowl</a></li>
+      <li><a routerLink="/catering" routerLinkActive="active" (click)="closeMenu()">Catering</a></li>
+      <li><a routerLink="/about" routerLinkActive="active" (click)="closeMenu()">About</a></li>
+      <li><a routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">Contact</a></li>
+      <li><a routerLink="/order" routerLinkActive="active" class="nav-cta" (click)="closeMenu()">Order Online</a></li>
+    </ul>
+  </div>
+</nav>

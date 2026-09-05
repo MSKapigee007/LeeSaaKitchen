@@ -1,0 +1,25 @@
+<div class="menu-card" [class.popular]="item.isPopular">
+  <div class="card-badge" *ngIf="item.isPopular">
+    <span>⭐ Popular</span>
+  </div>
+  <div class="card-content">
+    <div class="card-header">
+      <h3 class="item-name">
+        <span class="veg-indicator" *ngIf="item.isVegetarian" title="Vegetarian">🟢</span>
+        <span class="halal-indicator" *ngIf="item.isHalal" title="100% Halal Meat">🥩 Halal</span>
+        {{ item.name }}
+      </h3>
+      <span class="item-price" *ngIf="item.priceDisplay">{{ item.priceDisplay }}</span>
+      <span class="item-price" *ngIf="!item.priceDisplay && item.price > 0">${{ item.price | number:'1.2-2' }}</span>
+    </div>
+    <p class="item-description">{{ item.description }}</p>
+    <div class="card-footer">
+      <div class="item-tags">
+        <span class="tag" *ngFor="let tag of item.tags">{{ tag }}</span>
+      </div>
+      <button class="add-btn" *ngIf="showAddToCart" (click)="onAddToCart()" [attr.aria-label]="'Add ' + item.name + ' to cart'">
+        + Add
+      </button>
+    </div>
+  </div>
+</div>

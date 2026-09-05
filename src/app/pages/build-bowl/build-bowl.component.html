@@ -1,0 +1,349 @@
+<section class="page-hero">
+  <div class="container">
+    <span class="section-badge">In-Store Menu & Custom Meals</span>
+    <h1>BUILD YOUR <span class="highlight">MEAL</span></h1>
+    <p>Craft your perfect wholesome NutriBowl tailored to your exact taste, dietary goals, and appetite. Fresh, colorful, and loaded with flavor.</p>
+  </div>
+</section>
+
+<!-- Success Modal / Banner -->
+<section class="success-banner" *ngIf="orderAdded">
+  <div class="container">
+    <div class="success-box">
+      <span class="success-icon">🎉</span>
+      <h2>Your Custom Bowl is Ready!</h2>
+      <p>We've crafted your personalized NutriBowl combination. You can show this custom recipe at checkout in-store or place an order via WhatsApp.</p>
+      <div class="summary-pills">
+        <span class="pill" *ngIf="selectedBase"><strong>Base:</strong> {{ selectedBase.name }}</span>
+        <span class="pill" *ngFor="let p of selectedProteins"><strong>Protein:</strong> {{ p.name }}</span>
+        <span class="pill" *ngIf="selectedCheese && selectedCheese.name !== 'No Cheese'"><strong>Cheese:</strong> {{ selectedCheese.name }}</span>
+      </div>
+      <div class="success-actions">
+        <button (click)="resetBowl()" class="btn btn-secondary">Build Another Bowl</button>
+        <a routerLink="/order" class="btn btn-primary">Proceed to Checkout (${{ calculateTotal() | number:'1.2-2' }})</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="builder-section" *ngIf="!orderAdded">
+  <div class="container">
+    <div class="builder-layout">
+
+      <!-- Steps Column -->
+      <div class="builder-steps">
+
+        <!-- 1. BASE -->
+        <div class="step-card" id="step-base">
+          <div class="step-header">
+            <div class="step-badge">1</div>
+            <div>
+              <span class="step-sub">Base</span>
+              <h2>CHOOSE YOUR BASE</h2>
+              <p class="step-hint">Select 1 foundation for your bowl</p>
+            </div>
+          </div>
+          <div class="options-grid">
+            <button
+              type="button"
+              class="option-card"
+              *ngFor="let item of sections[0].items"
+              [class.selected]="selectedBase?.name === item.name"
+              (click)="selectBase(item)"
+            >
+              <div class="option-icon">{{ item.icon }}</div>
+              <div class="option-details">
+                <div class="option-title-row">
+                  <h4>{{ item.name }}</h4>
+                  <span class="badge-mini" *ngIf="item.isPopular">Popular</span>
+                </div>
+                <p>{{ item.desc }}</p>
+              </div>
+              <div class="check-radio">
+                <span *ngIf="selectedBase?.name === item.name">✓</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. PROTEIN -->
+        <div class="step-card" id="step-protein">
+          <div class="step-header">
+            <div class="step-badge">2</div>
+            <div>
+              <span class="step-sub">Protein</span>
+              <h2>POWER IT UP</h2>
+              <p class="step-hint">Pick up to 2 (1 included in bowl price; 100% Halal meats)</p>
+            </div>
+          </div>
+          <div class="options-grid">
+            <button
+              type="button"
+              class="option-card"
+              *ngFor="let item of sections[1].items"
+              [class.selected]="isProteinSelected(item)"
+              (click)="toggleProtein(item)"
+            >
+              <div class="option-icon">{{ item.icon }}</div>
+              <div class="option-details">
+                <div class="option-title-row">
+                  <h4>
+                    <span class="halal-tag" *ngIf="item.isHalal">Halal</span>
+                    <span class="veg-tag" *ngIf="item.isVegetarian">Veg</span>
+                    {{ item.name }}
+                  </h4>
+                  <span class="extra-price" *ngIf="item.price">+${{ item.price | number:'1.2-2' }}</span>
+                </div>
+                <p>{{ item.desc }}</p>
+              </div>
+              <div class="check-radio">
+                <span *ngIf="isProteinSelected(item)">✓</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. ADD-ONS -->
+        <div class="step-card" id="step-addons">
+          <div class="step-header">
+            <div class="step-badge">3</div>
+            <div>
+              <span class="step-sub">Add-Ons</span>
+              <h2>MAKE IT EXTRA</h2>
+              <p class="step-hint">Add crunch, texture and savory bonuses (Optional)</p>
+            </div>
+          </div>
+          <div class="options-grid">
+            <button
+              type="button"
+              class="option-card"
+              *ngFor="let item of sections[2].items"
+              [class.selected]="isAddOnSelected(item)"
+              (click)="toggleAddOn(item)"
+            >
+              <div class="option-icon">{{ item.icon }}</div>
+              <div class="option-details">
+                <div class="option-title-row">
+                  <h4>{{ item.name }}</h4>
+                  <span class="extra-price">+${{ item.price | number:'1.2-2' }}</span>
+                </div>
+                <p>{{ item.desc }}</p>
+              </div>
+              <div class="check-radio">
+                <span *ngIf="isAddOnSelected(item)">✓</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. CHEESE -->
+        <div class="step-card" id="step-cheese">
+          <div class="step-header">
+            <div class="step-badge">4</div>
+            <div>
+              <span class="step-sub">Cheese</span>
+              <h2>SAY CHEESE 🧀</h2>
+              <p class="step-hint">Indo-American fusion cheesy comfort</p>
+            </div>
+          </div>
+          <div class="options-grid">
+            <button
+              type="button"
+              class="option-card"
+              *ngFor="let item of sections[3].items"
+              [class.selected]="selectedCheese?.name === item.name"
+              (click)="selectCheese(item)"
+            >
+              <div class="option-icon">{{ item.icon }}</div>
+              <div class="option-details">
+                <div class="option-title-row">
+                  <h4>{{ item.name }}</h4>
+                  <span class="badge-mini" *ngIf="item.isPopular">Popular</span>
+                </div>
+                <p>{{ item.desc }}</p>
+              </div>
+              <div class="check-radio">
+                <span *ngIf="selectedCheese?.name === item.name">✓</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 5. VEGGIES -->
+        <div class="step-card" id="step-veggies">
+          <div class="step-header">
+            <div class="step-badge">5</div>
+            <div>
+              <span class="step-sub">Veggies</span>
+              <h2>LOAD UP THE VEGGIES</h2>
+              <p class="step-hint">Select up to 4 fresh, crisp or pickled garden toppings</p>
+            </div>
+          </div>
+          <div class="options-grid compact">
+            <button
+              type="button"
+              class="option-card compact"
+              *ngFor="let item of sections[4].items"
+              [class.selected]="isVeggieSelected(item)"
+              (click)="toggleVeggie(item)"
+            >
+              <span class="option-icon-sm">{{ item.icon }}</span>
+              <span class="option-label">{{ item.name }}</span>
+              <div class="check-radio-sm">
+                <span *ngIf="isVeggieSelected(item)">✓</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 6. SAUCES -->
+        <div class="step-card" id="step-sauces">
+          <div class="step-header">
+            <div class="step-badge">6</div>
+            <div>
+              <span class="step-sub">Sauces</span>
+              <h2>DRIZZLE & DRESS</h2>
+              <p class="step-hint">Select up to 3 house chutneys and signature sauces</p>
+            </div>
+          </div>
+          <div class="options-grid">
+            <button
+              type="button"
+              class="option-card"
+              *ngFor="let item of sections[5].items"
+              [class.selected]="isSauceSelected(item)"
+              (click)="toggleSauce(item)"
+            >
+              <div class="option-icon">{{ item.icon }}</div>
+              <div class="option-details">
+                <div class="option-title-row">
+                  <h4>{{ item.name }}</h4>
+                  <span class="badge-mini" *ngIf="item.isPopular">Popular</span>
+                </div>
+                <p>{{ item.desc }}</p>
+              </div>
+              <div class="check-radio">
+                <span *ngIf="isSauceSelected(item)">✓</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 7. SEASONING -->
+        <div class="step-card" id="step-seasoning">
+          <div class="step-header">
+            <div class="step-badge">7</div>
+            <div>
+              <span class="step-sub">Seasoning</span>
+              <h2>FINISH WITH FLAVOR</h2>
+              <p class="step-hint">Aromatic spices and crispy garnishes (Select up to 2)</p>
+            </div>
+          </div>
+          <div class="options-grid">
+            <button
+              type="button"
+              class="option-card"
+              *ngFor="let item of sections[6].items"
+              [class.selected]="isSeasoningSelected(item)"
+              (click)="toggleSeasoning(item)"
+            >
+              <div class="option-icon">{{ item.icon }}</div>
+              <div class="option-details">
+                <div class="option-title-row">
+                  <h4>{{ item.name }}</h4>
+                  <span class="badge-mini" *ngIf="item.isPopular">Signature</span>
+                </div>
+                <p>{{ item.desc }}</p>
+              </div>
+              <div class="check-radio">
+                <span *ngIf="isSeasoningSelected(item)">✓</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Order Summary Sticky Sidebar -->
+      <div class="builder-summary-col">
+        <div class="summary-card">
+          <div class="summary-header">
+            <h3>🥣 Your Custom Bowl</h3>
+            <span class="summary-price">${{ calculateTotal() | number:'1.2-2' }}</span>
+          </div>
+
+          <div class="summary-list">
+            <!-- Base -->
+            <div class="summary-item">
+              <span class="label">Base:</span>
+              <span class="val">{{ selectedBase ? selectedBase.name : 'None selected' }}</span>
+            </div>
+
+            <!-- Protein -->
+            <div class="summary-item">
+              <span class="label">Protein:</span>
+              <span class="val" *ngIf="selectedProteins.length > 0">
+                <span class="tag-inline" *ngFor="let p of selectedProteins">{{ p.name }}</span>
+              </span>
+              <span class="val empty" *ngIf="selectedProteins.length === 0">Choose 1 protein *</span>
+            </div>
+
+            <!-- Add-ons -->
+            <div class="summary-item" *ngIf="selectedAddOns.length > 0">
+              <span class="label">Add-Ons:</span>
+              <span class="val">
+                <span class="tag-inline" *ngFor="let a of selectedAddOns">{{ a.name }} (+${{ a.price }})</span>
+              </span>
+            </div>
+
+            <!-- Cheese -->
+            <div class="summary-item" *ngIf="selectedCheese">
+              <span class="label">Cheese:</span>
+              <span class="val">{{ selectedCheese.name }}</span>
+            </div>
+
+            <!-- Veggies -->
+            <div class="summary-item" *ngIf="selectedVeggies.length > 0">
+              <span class="label">Veggies ({{ selectedVeggies.length }}/4):</span>
+              <span class="val">
+                <span class="tag-inline" *ngFor="let v of selectedVeggies">{{ v.name }}</span>
+              </span>
+            </div>
+
+            <!-- Sauces -->
+            <div class="summary-item" *ngIf="selectedSauces.length > 0">
+              <span class="label">Sauces ({{ selectedSauces.length }}/3):</span>
+              <span class="val">
+                <span class="tag-inline" *ngFor="let s of selectedSauces">{{ s.name }}</span>
+              </span>
+            </div>
+
+            <!-- Seasoning -->
+            <div class="summary-item" *ngIf="selectedSeasoning.length > 0">
+              <span class="label">Finishing:</span>
+              <span class="val">
+                <span class="tag-inline" *ngFor="let sn of selectedSeasoning">{{ sn.name }}</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="summary-footer">
+            <div class="total-bar">
+              <span>Bowl Total:</span>
+              <strong>${{ calculateTotal() | number:'1.2-2' }}</strong>
+            </div>
+            <button
+              class="btn btn-primary btn-full"
+              [disabled]="!canSubmit()"
+              (click)="addBowlToOrder()"
+            >
+              {{ canSubmit() ? 'Complete & Order Bowl' : 'Pick Base & Protein to Continue' }}
+            </button>
+            <p class="help-note">⚡ Made fresh to order in-store or for doorstep delivery in Augusta, GA</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
