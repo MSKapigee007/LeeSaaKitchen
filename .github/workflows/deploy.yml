@@ -32,7 +32,7 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: npx ng build --output-path=dist --base-href=/
+        run: npx ng build --output-path=dist --base-href=/LeeSaaKitchen/
 
       - name: Prepare GitHub Pages artifact
         run: |
@@ -42,8 +42,6 @@ jobs:
           else
             cp -r dist/* dist/site/
           fi
-          # Ensure CNAME for custom domain
-          echo "blog.augustacloudkitchen.com" > dist/site/CNAME
           # Ensure 404 fallback for Angular single-page routing
           cp dist/site/index.html dist/site/404.html
 
