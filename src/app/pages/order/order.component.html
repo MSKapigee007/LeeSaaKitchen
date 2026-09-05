@@ -35,7 +35,9 @@
           <div class="delivery-toggle"><label><input type="radio" formControlName="deliveryType" value="delivery"> Delivery</label><label><input type="radio" formControlName="deliveryType" value="pickup"> Pickup</label></div>
           <input formControlName="address" type="text" placeholder="Delivery Address *">
           <textarea formControlName="notes" rows="2" placeholder="Special instructions..."></textarea>
-          <button type="submit" class="btn btn-primary btn-full">Place Order - ${{ (getCartTotal() + 5) | number:'1.2-2' }}</button>
+          <button type="submit" class="btn btn-primary btn-full" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Sending Order...' : 'Place Order - $' + ((getCartTotal() + 5) | number:'1.2-2') }}
+          </button>
         </form>
       </div>
     </div>
@@ -45,7 +47,8 @@
 <section class="order-success" *ngIf="orderPlaced"><div class="container"><div class="success-card">
   <span class="success-icon">🎉</span>
   <h2>Order Placed Successfully!</h2>
-  <p>Thank you for your order! We're preparing your food with love.</p>
-  <p class="order-id">Order #{{ orderNumber }}</p>
+  <p>Thank you for your order! It has been logged to our kitchen orders system.</p>
+  <p class="order-id">Unique Order ID: <strong>#{{ orderNumber }}</strong></p>
   <p class="eta">Estimated delivery: 30-45 minutes</p>
+  <p class="direct-call-note">Questions? Reach out directly at <strong>+1 (706) 925-2583</strong> or email <strong>leesasgrill&#64;gmail.com</strong></p>
 </div></div></section>
