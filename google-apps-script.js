@@ -1,23 +1,42 @@
 /**
- * Google Apps Script to log LeeSa's Grill orders directly into Google Sheets.
+ * Google Apps Script for Google Sheet:
+ * https://docs.google.com/spreadsheets/d/1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4/edit?gid=0#gid=0
  *
- * HOW TO SET UP IN 2 MINUTES:
- * 1. Open Google Sheets (https://sheets.new) and create a new sheet.
- * 2. Name your sheet tab "Orders" (default is usually "Sheet1", you can keep or rename).
- * 3. Add header row (Row 1):
- *    [Order ID, Timestamp, Customer Name, Phone, Email, Delivery Type, Address, Items Summary, Subtotal, Total, Notes]
- * 4. Click Extensions -> Apps Script.
- * 5. Paste the code below into Code.gs.
- * 6. Click Deploy -> New deployment.
- * 7. Select type: "Web app".
- * 8. Execute as: "Me", Who has access: "Anyone".
- * 9. Click Deploy and copy the Web App URL (starts with https://script.google.com/macros/s/...).
- * 10. Paste the URL into `googleAppsScriptUrl` inside `src/app/services/google-sheets.service.ts`.
+ * SPREADSHEET ID: 1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4
+ *
+ * HOW TO ATTACH AND DEPLOY:
+ * 1. Open your Google Sheet: https://docs.google.com/spreadsheets/d/1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4/edit?gid=0#gid=0
+ * 2. In Row 1, set up the columns:
+ *    Col A: Order ID
+ *    Col B: Timestamp
+ *    Col C: Customer Name
+ *    Col D: Phone
+ *    Col E: Email
+ *    Col F: Delivery Type
+ *    Col G: Address
+ *    Col H: Items Summary
+ *    Col I: Subtotal ($)
+ *    Col J: Total ($)
+ *    Col K: Notes
+ * 3. In the top menu, click Extensions -> Apps Script.
+ * 4. Paste all of this code into Code.gs (replacing any sample code).
+ * 5. Click "Deploy" (blue button at top right) -> "New deployment".
+ * 6. Click the gear icon next to "Select type" and choose "Web app".
+ * 7. Set:
+ *      Description: LeeSa's Grill Orders
+ *      Execute as: Me
+ *      Who has access: Anyone
+ * 8. Click "Deploy" and Authorize access.
+ * 9. Copy the Web App URL (starts with https://script.google.com/macros/s/...)
+ * 10. You're done! Orders from the website will automatically stream into this spreadsheet.
  */
+
+var SPREADSHEET_ID = "1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4";
 
 function doPost(e) {
   try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var sheet = ss.getActiveSheet();
     var data = JSON.parse(e.postData.contents);
 
     // Append row with order details
@@ -27,7 +46,7 @@ function doPost(e) {
       data.customerName || '',
       data.phone || '',
       data.email || '',
-      data.deliveryType || '',
+      data.deliveryType || 'delivery',
       data.address || '',
       data.itemsSummary || '',
       data.subtotal || 0,
@@ -36,15 +55,22 @@ function doPost(e) {
     ]);
 
     return ContentService
-      .createTextOutput(JSON.stringify({ status: 'success', orderId: data.orderId }))
+      .createTextOutput(JSON.stringify({
+        status: 'success',
+        orderId: data.orderId,
+        spreadsheetId: SPREADSHEET_ID
+      }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', message: error.toString() }))
+      .createTextOutput(JSON.stringify({
+        status: 'error',
+        message: error.toString()
+      }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
 function doGet(e) {
-  return ContentService.createTextOutput("LeeSa's Grill Order Logging API is active.");
+  return ContentService.createTextOutput("LeeSa's Grill Order Logging API for Sheet 1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4 is ACTIVE.");
 }

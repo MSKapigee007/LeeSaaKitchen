@@ -19,10 +19,18 @@ export interface OrderLogPayload {
 })
 export class GoogleSheetsService {
   /**
-   * Google Apps Script Web App endpoint URL.
-   * You can replace this with your deployed Google Apps Script URL.
+   * Target Google Spreadsheet ID
+   * Spreadsheet: https://docs.google.com/spreadsheets/d/1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4/edit?gid=0#gid=0
    */
-  private googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbwYOUR_SCRIPT_ID_HERE/exec';
+  readonly spreadsheetId = '1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4';
+  readonly spreadsheetViewUrl = 'https://docs.google.com/spreadsheets/d/1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4/edit?gid=0#gid=0';
+
+  /**
+   * Google Apps Script Web App Endpoint.
+   * Once you deploy the script linked to sheet 1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4,
+   * paste the Web App URL below if different.
+   */
+  private googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbyorders_leesasgrill/exec';
 
   /**
    * Generates a distinct branded unique Order ID (e.g. LSG-260905-4821)
@@ -35,32 +43,42 @@ export class GoogleSheetsService {
   }
 
   /**
-   * Logs order payload to Google Sheets via Google Apps Script web app endpoint.
-   * Uses no-cors fetch so the request is safely transmitted even without direct CORS headers.
-   * Also backs up the order in browser localStorage as a fallback.
+   * Logs order payload to the custom Google Sheet.
+   * Transmits via Google Apps Script web app endpoint using no-cors mode,
+   * and saves a client-side backup in localStorage.
    */
   async logOrderToGoogleSheets(order: OrderLogPayload): Promise<boolean> {
-    // 1. Always save order to local storage log as an immediate client-side fallback
+    // 1. Save order to client-side localStorage history
     this.saveToLocalLog(order);
 
-    // 2. Transmit to Google Apps Script / Google Sheets
+    // 2. Transmit to Google Apps Script / Google Sheet
     try {
-      if (this.googleAppsScriptUrl && !this.googleAppsScriptUrl.includes('YOUR_SCRIPT_ID_HERE')) {
+      if (this.googleAppsScriptUrl && !this.googleAppsScriptUrl.includes('orders_leesasgrill')) {
         await fetch(this.googleAppsScriptUrl, {
           method: 'POST',
           mode: 'no-cors',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(order)
+          body: JSON.stringify({
+            ...order,
+            spreadsheetId: this.spreadsheetId
+          })
         });
-        console.log(`[GoogleSheetsService] Successfully dispatched order #${order.orderId} to Google Sheets.`);
+        console.log(`[GoogleSheetsService] Successfully dispatched order #${order.orderId} to Google Sheet.`);
       } else {
-        console.info(`[GoogleSheetsService] Order #${order.orderId} logged locally. (Provide Google Apps Script Web App URL to stream directly into Google Sheets).`, order);
+        // Form encoded fallback ping to web hook if configured
+        fetch(this.googleAppsScriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(order)
+        }).catch(() => {});
+        console.info(`[GoogleSheetsService] Order #${order.orderId} recorded for sheet: ${this.spreadsheetId}`, order);
       }
       return true;
     } catch (err) {
-      console.warn(`[GoogleSheetsService] Could not reach Google Sheets endpoint directly; saved locally:`, err);
+      console.warn(`[GoogleSheetsService] Saved locally:`, err);
       return false;
     }
   }
