@@ -31,7 +31,7 @@ export class GoogleSheetsService {
   /**
    * Google Apps Script Web App Endpoint.
    */
-  private googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbyorders_leesasgrill/exec';
+  private googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbxOT4e8miIUeOWxVQ3GAAyRSbD9-9uks9WYUNGrhTfQcOHgqVTjfgEmp1YfoGfA91k/exec';
 
   /**
    * Generates a distinct branded unique Order ID based on type
@@ -57,12 +57,12 @@ export class GoogleSheetsService {
 
     // 2. Transmit to Google Apps Script / Google Sheet
     try {
-      if (this.googleAppsScriptUrl && !this.googleAppsScriptUrl.includes('orders_leesasgrill')) {
+      if (this.googleAppsScriptUrl) {
         await fetch(this.googleAppsScriptUrl, {
           method: 'POST',
           mode: 'no-cors',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'text/plain;charset=utf-8'
           },
           body: JSON.stringify({
             ...order,
@@ -70,19 +70,10 @@ export class GoogleSheetsService {
           })
         });
         console.log(`[GoogleSheetsService] Successfully dispatched ${order.orderType} #${order.orderId} to Google Sheet.`);
-      } else {
-        // Fallback transmission
-        fetch(this.googleAppsScriptUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(order)
-        }).catch(() => {});
-        console.info(`[GoogleSheetsService] ${order.orderType} #${order.orderId} recorded for sheet: ${this.spreadsheetId}`, order);
       }
       return true;
     } catch (err) {
-      console.warn(`[GoogleSheetsService] Saved locally:`, err);
+      console.warn(`[GoogleSheetsService] Error transmitting to Google Sheet, saved locally:`, err);
       return false;
     }
   }

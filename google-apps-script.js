@@ -35,8 +35,12 @@ var SPREADSHEET_ID = "1-UtxAYXGhF8tdI2KIWfLXjoCn6qU53YlyH9eZxLoOM4";
 
 function doPost(e) {
   try {
-    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-    var sheet = ss.getActiveSheet();
+    var sheet;
+    try {
+      sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    } catch (err) {
+      sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getActiveSheet();
+    }
     var data = JSON.parse(e.postData.contents);
 
     // Format event details if catering
