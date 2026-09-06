@@ -1,28 +1,23 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MenuService } from '../../services/menu.service';
 import { GoogleSheetsService, OrderLogPayload } from '../../services/google-sheets.service';
-import { MenuCategory } from '../../models/menu-item.model';
-import { MenuCardComponent } from '../../components/menu-card/menu-card.component';
 
 @Component({
   selector: 'app-catering',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MenuCardComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './catering.component.html',
   styleUrls: ['./catering.component.css']
 })
 export class CateringComponent {
-  quoteForm: FormGroup;
+  quoteForm!: FormGroup;
   submitted = false;
   isSubmitting = false;
   cateringOrderId = '';
-  cateringPackages: MenuCategory | undefined;
 
   constructor(
     private fb: FormBuilder,
-    private menuService: MenuService,
     private sheetsService: GoogleSheetsService
   ) {
     this.cateringOrderId = this.sheetsService.generateOrderId('CAT');
@@ -35,7 +30,6 @@ export class CateringComponent {
       packageType: ['Combination of Half Trays'],
       specialRequests: ['']
     });
-    this.cateringPackages = this.menuService.getCategoryByName('Catering Packages');
   }
 
   async onSubmit() {

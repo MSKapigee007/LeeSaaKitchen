@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:docs": "ng build --output-path=../docs --base-href=/ && cp ../docs/browser/* ../docs/ 2>/dev/null || true && cp ../docs/index.html ../docs/404.html 2>/dev/null || true",
+    "build:docs": "ng build --output-path=docs --base-href=/LeeSaaKitchen/ && cp -r docs/browser/* docs/ && rm -rf docs/browser && cp docs/index.html docs/404.html",
+    "build:pages": "npm run build:docs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

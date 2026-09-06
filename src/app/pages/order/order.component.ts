@@ -27,7 +27,7 @@ export class OrderComponent implements OnInit {
   isSubmitting = false;
   searchQuery = '';
   filteredCategories: MenuCategory[] = [];
-  checkoutForm: FormGroup;
+  checkoutForm!: FormGroup;
   orderNumber = '';
 
   constructor(

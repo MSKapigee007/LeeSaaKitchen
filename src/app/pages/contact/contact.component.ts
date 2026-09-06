@@ -10,7 +10,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent {
-  contactForm: FormGroup;
+  contactForm!: FormGroup;
   submitted = false;
 
   constructor(private fb: FormBuilder) {

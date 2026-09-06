@@ -35,7 +35,6 @@ interface StepSection {
 })
 export class BuildBowlComponent {
   baseBowlPrice = 11.99;
-  orderAdded = false;
   orderPlaced = false;
   isSubmitting = false;
   bowlOrderId = '';
@@ -342,7 +341,6 @@ export class BuildBowlComponent {
 
       this.isSubmitting = false;
       this.orderPlaced = true;
-      this.orderAdded = true;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       Object.keys(this.checkoutForm.controls).forEach(k => this.checkoutForm.get(k)?.markAsTouched());
@@ -357,7 +355,6 @@ export class BuildBowlComponent {
     this.selectedVeggies = [];
     this.selectedSauces = [];
     this.selectedSeasoning = [];
-    this.orderAdded = false;
     this.orderPlaced = false;
     this.showCheckoutStep = false;
     this.bowlOrderId = this.sheetsService.generateOrderId('BWL');
