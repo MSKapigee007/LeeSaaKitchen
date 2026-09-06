@@ -41,23 +41,6 @@
   border-radius: 16px;
 }
 
-.menu-highlight-bar {
-  background: #FFF4EE;
-  border-bottom: 1px solid #FFDEC8;
-  padding: 1.25rem 0;
-}
-
-.bar-flex {
-  display: flex;
-  justify-content: space-around;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.bar-point {
-  font-size: 0.95rem;
-  color: #333;
-}
 
 .btn-pdf {
   background: rgba(255, 255, 255, 0.15);
@@ -214,10 +197,6 @@
 .about-text h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--text); margin-bottom: 1.5rem; line-height: 1.3; }
 .about-text p { color: #666; line-height: 1.8; margin-bottom: 1rem; font-size: 1.02rem; }
 
-.popular-section { padding: 6rem 0; background: var(--bg); }
-.popular-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-.section-cta { text-align: center; margin-top: 2.5rem; }
-
 .why-section { padding: 6rem 0; }
 .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
 .why-card { text-align: center; padding: 2rem 1.5rem; border-radius: 16px; transition: all 0.3s ease; background: white; border: 1px solid rgba(0,0,0,0.04); }
@@ -242,7 +221,6 @@
 .cta-section p { color: #bbb; font-size: 1.1rem; margin-bottom: 2rem; }
 
 @media (max-width: 992px) {
-  .popular-grid { grid-template-columns: repeat(2, 1fr); }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -251,7 +229,7 @@
   .hero-stats { gap: 1.5rem; }
   .stat-number { font-size: 1.5rem; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .popular-grid, .why-grid, .testimonials-grid { grid-template-columns: 1fr; }
+  .why-grid, .testimonials-grid { grid-template-columns: 1fr; }
   .section-header h2 { font-size: 2rem; }
   .cta-section h2 { font-size: 2rem; }
 }
