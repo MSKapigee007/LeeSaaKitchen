@@ -2,7 +2,7 @@
   <div class="container">
     <span class="section-badge">Augusta Cloud Kitchen Catering Menu</span>
     <h1>Explore Our <span class="highlight">Authentic Menu</span></h1>
-    <p>Handcrafted South Indian Tiffins, Hyderabadi Dum Biryanis, Flavorful Curries, and Party Trays. All meats are 100% Halal.</p>
+    <p>Authentic South Indian Tiffins, Hyderabadi Dum Biryanis, Flavorful Curries, and Party Trays. All meats are 100% Halal.</p>
     <div class="menu-hero-actions">
       <a href="assets/Augusta_Cloud_Kitchen_Catering_Menu.pdf" target="_blank" class="pdf-download-btn">
         📄 View / Download Original PDF Menu
@@ -24,13 +24,13 @@
       <div class="alert-item">
         <span class="alert-icon">🍱</span>
         <div>
-          <strong>Flexible Catering Portions:</strong> Available in Single orders, Half Trays, and Full Trays.
+          <strong>Catering Portions:</strong> Available in Single orders, Half Trays, and Full Trays.
         </div>
       </div>
       <div class="alert-item">
         <span class="alert-icon">💬</span>
         <div>
-          <strong>Order Channels:</strong> Contact us via WhatsApp, Instagram, or Facebook!
+          <strong>Easy Ordering:</strong> Contact us via WhatsApp, Instagram, or Facebook!
         </div>
       </div>
     </div>
@@ -40,78 +40,98 @@
       <div class="filter-toggles">
         <button
           class="filter-pill"
-          [class.active]="menuTypeFilter === 'all'"
-          (click)="filterByMenuType('all')"
+          [class.active]="selectedGroup === 'all'"
+          (click)="setGroup('all')"
         >
           All Items
         </button>
         <button
           class="filter-pill veg"
-          [class.active]="menuTypeFilter === 'veg'"
-          (click)="filterByMenuType('veg')"
+          [class.active]="selectedGroup === 'veg'"
+          (click)="setGroup('veg')"
         >
           🟢 Vegetarian
         </button>
         <button
           class="filter-pill non-veg"
-          [class.active]="menuTypeFilter === 'non-veg'"
-          (click)="filterByMenuType('non-veg')"
+          [class.active]="selectedGroup === 'non-veg'"
+          (click)="setGroup('non-veg')"
         >
-          🥩 Non-Veg (Halal)
-        </button>
-      </div>
-
-      <!-- Category Quick Jump Tabs -->
-      <div class="category-tabs">
-        <button
-          *ngFor="let name of getCategoryNames()"
-          class="tab"
-          [class.active]="activeCategory === name"
-          (click)="filterByCategory(name)"
-        >
-          {{ name }}
+          🍗 Non-Veg (Halal)
         </button>
       </div>
     </div>
 
-    <p class="results-count">Showing {{ getTotalItems() }} authentic dishes from Augusta Cloud Kitchen menu</p>
+    <!-- PDF Menu Documents Container -->
+    <div class="pdf-documents-container">
+      
+      <!-- VEG MENU SHEET -->
+      <article class="pdf-sheet veg-sheet" *ngIf="showVeg">
+        <header class="sheet-header">
+          <h2 class="sheet-title">{{ vegMenu.title }}</h2>
+          <p class="sheet-subtitle">
+            <a href="#contact">Contact us via WhatsApp/Instagram/Facebook</a>
+          </p>
+        </header>
 
-    <!-- Menu Categories (Compact List View for Minimal Scrolling) -->
-    <div class="menu-categories">
-      <div class="category-section" *ngFor="let category of filteredCategories">
-        <div class="category-header">
-          <div class="cat-title-group">
-            <span class="category-icon">{{ category.icon }}</span>
-            <h2>{{ category.name }}</h2>
-          </div>
-          <span class="category-count">{{ category.items.length }} dishes</span>
-        </div>
-
-        <div class="menu-list-grid">
-          <div class="compact-menu-row" *ngFor="let item of category.items">
-            <div class="item-info">
-              <div class="item-name-line">
-                <span class="diet-icon" [class.veg]="item.isVegetarian" [class.nonveg]="!item.isVegetarian" [title]="item.isVegetarian ? 'Vegetarian' : 'Halal Meat'">
-                  <span class="inner-dot"></span>
+        <div class="sheet-grid">
+          <div class="sheet-section" *ngFor="let section of vegMenu.sections">
+            <h3 class="section-heading">{{ section.title }}</h3>
+            <ul class="section-bullet-list">
+              <li *ngFor="let item of section.items" class="bullet-item">
+                <span class="bullet-point">●</span>
+                <span class="item-text">
+                  <strong class="item-name">{{ item.name }}</strong>
+                  <span class="item-price"> ({{ item.price }})</span>
                 </span>
-                <span class="dish-name">{{ item.name }}</span>
-                <span class="badge-popular" *ngIf="item.isPopular">Popular</span>
-              </div>
-              <p class="dish-desc" *ngIf="item.description">{{ item.description }}</p>
-            </div>
-            <div class="item-price-side">
-              <span class="pricing-label">{{ item.priceDisplay || ('$' + (item.price | number:'1.2-2')) }}</span>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
+
+        <footer class="sheet-footer">
+          <p class="sheet-note">{{ vegMenu.footerNote }}</p>
+        </footer>
+      </article>
+
+      <!-- NON-VEG MENU SHEET -->
+      <article class="pdf-sheet nonveg-sheet" *ngIf="showNonVeg">
+        <header class="sheet-header">
+          <h2 class="sheet-title">{{ nonVegMenu.title }}</h2>
+          <p class="sheet-subtitle">
+            <a href="#contact">Contact us via WhatsApp/Instagram/Facebook</a>
+          </p>
+        </header>
+
+        <div class="sheet-grid">
+          <div class="sheet-section" *ngFor="let section of nonVegMenu.sections">
+            <h3 class="section-heading">{{ section.title }}</h3>
+            <ul class="section-bullet-list">
+              <li *ngFor="let item of section.items" class="bullet-item">
+                <span class="bullet-point">●</span>
+                <span class="item-text">
+                  <strong class="item-name">{{ item.name }}</strong>
+                  <span class="item-price"> ({{ item.price }})</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <footer class="sheet-footer">
+          <p class="sheet-note highlight-halal">{{ nonVegMenu.footerNote }}</p>
+        </footer>
+      </article>
+
     </div>
 
-    <!-- No Results -->
-    <div class="no-results" *ngIf="filteredCategories.length === 0">
-      <span class="emoji-large">🍽️</span>
-      <h3>No items found</h3>
-      <p>Try selecting a different category or dietary filter</p>
+    <!-- Bottom Quick PDF Link -->
+    <div class="bottom-pdf-action">
+      <p>Need a printable copy for your event?</p>
+      <a href="assets/Augusta_Cloud_Kitchen_Catering_Menu.pdf" target="_blank" class="secondary-pdf-btn">
+        📥 Download Full Catering Menu (PDF)
+      </a>
     </div>
+
   </div>
 </section>
