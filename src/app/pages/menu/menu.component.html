@@ -35,19 +35,8 @@
       </div>
     </div>
 
-    <!-- Filters -->
-    <div class="menu-filters">
-      <div class="search-bar">
-        <span class="search-icon">🔍</span>
-        <input
-          type="text"
-          [(ngModel)]="searchQuery"
-          (input)="onSearch()"
-          placeholder="Search dishes (Biryani, Paneer, Chicken 65, Vada...)..."
-          class="search-input"
-          aria-label="Search menu items"
-        />
-      </div>
+    <!-- Dietary Group Filters -->
+    <div class="menu-group-filters">
       <div class="filter-toggles">
         <button
           class="filter-pill"
@@ -68,44 +57,61 @@
           [class.active]="menuTypeFilter === 'non-veg'"
           (click)="filterByMenuType('non-veg')"
         >
-          🍗 Non-Veg (Halal)
+          🥩 Non-Veg (Halal)
+        </button>
+      </div>
+
+      <!-- Category Quick Jump Tabs -->
+      <div class="category-tabs">
+        <button
+          *ngFor="let name of getCategoryNames()"
+          class="tab"
+          [class.active]="activeCategory === name"
+          (click)="filterByCategory(name)"
+        >
+          {{ name }}
         </button>
       </div>
     </div>
 
-    <!-- Category Tabs -->
-    <div class="category-tabs">
-      <button
-        *ngFor="let name of getCategoryNames()"
-        class="tab"
-        [class.active]="activeCategory === name"
-        (click)="filterByCategory(name)"
-      >
-        {{ name }}
-      </button>
-    </div>
+    <p class="results-count">Showing {{ getTotalItems() }} authentic dishes from Augusta Cloud Kitchen menu</p>
 
-    <p class="results-count">Showing {{ getTotalItems() }} authentic items from Augusta Cloud Kitchen menu</p>
-
-    <!-- Menu Categories -->
+    <!-- Menu Categories (Compact List View for Minimal Scrolling) -->
     <div class="menu-categories">
       <div class="category-section" *ngFor="let category of filteredCategories">
         <div class="category-header">
-          <span class="category-icon">{{ category.icon }}</span>
-          <h2>{{ category.name }}</h2>
-          <span class="category-count">{{ category.items.length }} items</span>
+          <div class="cat-title-group">
+            <span class="category-icon">{{ category.icon }}</span>
+            <h2>{{ category.name }}</h2>
+          </div>
+          <span class="category-count">{{ category.items.length }} dishes</span>
         </div>
-        <div class="menu-grid">
-          <app-menu-card *ngFor="let item of category.items" [item]="item"></app-menu-card>
+
+        <div class="menu-list-grid">
+          <div class="compact-menu-row" *ngFor="let item of category.items">
+            <div class="item-info">
+              <div class="item-name-line">
+                <span class="diet-icon" [class.veg]="item.isVegetarian" [class.nonveg]="!item.isVegetarian" [title]="item.isVegetarian ? 'Vegetarian' : 'Halal Meat'">
+                  <span class="inner-dot"></span>
+                </span>
+                <span class="dish-name">{{ item.name }}</span>
+                <span class="badge-popular" *ngIf="item.isPopular">Popular</span>
+              </div>
+              <p class="dish-desc" *ngIf="item.description">{{ item.description }}</p>
+            </div>
+            <div class="item-price-side">
+              <span class="pricing-label">{{ item.priceDisplay || ('$' + (item.price | number:'1.2-2')) }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- No Results -->
     <div class="no-results" *ngIf="filteredCategories.length === 0">
-      <span class="emoji-large">🔍</span>
-      <h3>No matching items found</h3>
-      <p>Try clearing your search or filter</p>
+      <span class="emoji-large">🍽️</span>
+      <h3>No items found</h3>
+      <p>Try selecting a different category or dietary filter</p>
     </div>
   </div>
 </section>

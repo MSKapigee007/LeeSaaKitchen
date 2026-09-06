@@ -95,64 +95,35 @@
   line-height: 1;
 }
 
-/* Filters */
-.menu-filters {
+/* Dietary Group Filters */
+.menu-group-filters {
   display: flex;
-  gap: 1.5rem;
+  flex-direction: column;
+  gap: 1.25rem;
   margin-bottom: 1.5rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.search-bar {
-  flex: 1;
-  min-width: 280px;
-  position: relative;
-}
-
-.search-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1rem;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.9rem 1rem 0.9rem 3rem;
-  border: 2px solid #eee;
-  border-radius: 12px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  outline: none;
-  font-family: 'Open Sans', sans-serif;
-  box-sizing: border-box;
-}
-
-.search-input:focus {
-  border-color: var(--primary);
 }
 
 .filter-toggles {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .filter-pill {
-  padding: 0.75rem 1.4rem;
-  border: 2px solid #eee;
+  padding: 0.7rem 1.5rem;
+  border: 2px solid #e6ded6;
   border-radius: 25px;
   background: white;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  transition: all 0.3s ease;
-  color: #555;
+  transition: all 0.25s ease;
+  color: #444;
 }
 
 .filter-pill:hover {
   border-color: #bbb;
+  transform: translateY(-1px);
 }
 
 .filter-pill.active {
@@ -176,22 +147,21 @@
 /* Category Tabs */
 .category-tabs {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.45rem;
   flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid #eee;
 }
 
 .tab {
-  padding: 0.5rem 1.2rem;
+  padding: 0.45rem 1.1rem;
   border: none;
   background: var(--bg);
-  border-radius: 25px;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 500;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   color: #666;
 }
 
@@ -207,45 +177,164 @@
 
 .results-count {
   color: #888;
-  font-size: 0.9rem;
-  margin-bottom: 2rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.75rem;
 }
 
-/* Category Sections */
+/* Category Sections & Compact List */
 .category-section {
-  margin-bottom: 3rem;
+  margin-bottom: 2.25rem;
 }
 
 .category-header {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 2px solid var(--bg);
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid #f0eae3;
+}
+
+.cat-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .category-icon {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 
 .category-header h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: var(--text);
   margin: 0;
-  flex: 1;
 }
 
 .category-count {
-  color: #999;
-  font-size: 0.85rem;
+  color: #888;
+  font-size: 0.82rem;
+  background: #f7f3ee;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
 }
 
-.menu-grid {
+/* Compact Menu List Grid */
+.menu-list-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1.25rem;
+}
+
+.compact-menu-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  background: white;
+  border: 1.5px solid #ece4dc;
+  border-radius: 12px;
+  padding: 0.85rem 1.1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.compact-menu-row:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(212, 69, 26, 0.09);
+  transform: translateY(-1px);
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.diet-icon {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.diet-icon.veg {
+  border: 1.5px solid #2e7d32;
+}
+
+.diet-icon.veg .inner-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2e7d32;
+}
+
+.diet-icon.nonveg {
+  border: 1.5px solid #b71c1c;
+}
+
+.diet-icon.nonveg .inner-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b71c1c;
+}
+
+.dish-name {
+  font-weight: 700;
+  font-size: 0.96rem;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.badge-popular {
+  background: #fff0eb;
+  color: var(--primary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dish-desc {
+  font-size: 0.81rem;
+  color: #777;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item-price-side {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.pricing-label {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: var(--primary);
+  background: #fff5ee;
+  border: 1px solid #ffdcc8;
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  white-space: nowrap;
 }
 
 /* No Results */
@@ -269,24 +358,21 @@
 
 /* Responsive */
 @media (max-width: 992px) {
-  .menu-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .menu-alert-banner {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .menu-hero h1 {
     font-size: 2.2rem;
   }
 
-  .menu-grid {
+  .menu-list-grid {
     grid-template-columns: 1fr;
   }
 
-  .category-tabs {
-    justify-content: center;
+  .compact-menu-row {
+    padding: 0.8rem 1rem;
   }
 }
