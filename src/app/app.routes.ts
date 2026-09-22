@@ -33,8 +33,8 @@ export const routes: Routes = [
   },
   {
     path: 'order',
-    loadComponent: () => import('./pages/order/order.component').then(m => m.OrderComponent),
-    title: 'Order Online - LeeSaa Kitchen'
+    redirectTo: 'contact',
+    pathMatch: 'full'
   },
   {
     path: '**',
