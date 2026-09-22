@@ -13,8 +13,8 @@ export const routes: Routes = [
   },
   {
     path: 'build-your-bowl',
-    loadComponent: () => import('./pages/build-bowl/build-bowl.component').then(m => m.BuildBowlComponent),
-    title: 'Build Your Bowl - LeeSa\'s Grill In-Store Menu'
+    redirectTo: 'menu',
+    pathMatch: 'full'
   },
   {
     path: 'catering',

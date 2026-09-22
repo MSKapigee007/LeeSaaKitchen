@@ -103,10 +103,6 @@
   font-weight: 600;
 }
 
-.bowl-nav-link {
-  color: var(--primary) !important;
-  font-weight: 600 !important;
-}
 
 .nav-menu a.active::after {
   content: '';
