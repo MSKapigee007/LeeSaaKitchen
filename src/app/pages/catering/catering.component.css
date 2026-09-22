@@ -143,46 +143,75 @@
 
 .detail span { font-size: 1.2rem; }
 
-.quote-form {
+.quote-call-card {
   background: white;
-  padding: 2.5rem;
+  padding: 3rem 2.5rem;
   border-radius: 20px;
-  box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 2px solid #FFF0E6;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group { margin-bottom: 1.2rem; }
+.quote-call-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(212, 69, 26, 0.15);
+}
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.4rem;
-  font-weight: 600;
-  font-size: 0.9rem;
+.call-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.call-card-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.call-card-inner h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
   color: var(--text);
+  margin: 0;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 2px solid #eee;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-family: 'Open Sans', sans-serif;
-  transition: border-color 0.3s ease;
-  outline: none;
-  box-sizing: border-box;
+.call-card-inner p {
+  color: #666;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 0;
+  max-width: 380px;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: var(--primary);
+.btn-call-action {
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 1.1rem 2.2rem;
+  border-radius: 50px;
+  background: var(--primary);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  box-shadow: 0 6px 20px rgba(212, 69, 26, 0.35);
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.btn-call-action:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 69, 26, 0.45);
+}
 
-.error { color: #e53935; font-size: 0.8rem; margin-top: 0.3rem; display: block; }
+.call-card-hint {
+  font-size: 0.85rem;
+  color: #888;
+  font-style: italic;
+}
 
 .btn { display: inline-block; padding: 0.9rem 2.2rem; border-radius: 30px; font-weight: 600; font-size: 1rem; text-decoration: none; transition: all 0.3s ease; cursor: pointer; border: none; }
 .btn-primary { background: var(--primary); color: white; }
@@ -190,17 +219,6 @@
 .btn-outline-light { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.4); }
 .btn-outline-light:hover { background: white; color: var(--primary); }
 .btn-full { width: 100%; text-align: center; }
-
-.success-message {
-  text-align: center;
-  padding: 3rem;
-  background: #E8F5E9;
-  border-radius: 20px;
-}
-
-.success-icon { font-size: 3rem; display: block; margin-bottom: 1rem; }
-.success-message h3 { font-size: 1.5rem; color: #2E7D32; margin-bottom: 0.8rem; }
-.success-message p { color: #555; }
 
 @media (max-width: 992px) {
   .features-grid { grid-template-columns: repeat(2, 1fr); }
