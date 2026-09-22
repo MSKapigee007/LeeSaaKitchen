@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;500;600;700;800;900&family=Norican&family=Open+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
 
 :root {
   --primary: #D4451A;
@@ -7,6 +7,51 @@
   --accent: #C5962A;
   --text: #2C2C2C;
   --bg: #FAFAF8;
+
+  /* LeeSa's Grill Logo Typography */
+  --font-brand-script: 'Norican', 'Lobster', 'Candy Script', 'Ballpark Weiner', cursive;
+  --font-brand-grill: 'Montserrat', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-brand-sub: 'Montserrat', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Brand Typography Utility Classes Matching Logo */
+.leesas-script {
+  font-family: var(--font-brand-script);
+  font-weight: 400;
+  font-style: normal;
+}
+
+.grill-sans {
+  font-family: var(--font-brand-grill);
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.brand-subtext {
+  font-family: var(--font-brand-sub);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.leesas-grill-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  line-height: 1;
+}
+
+.section-badge .leesas-script {
+  font-size: 1.25em;
+  line-height: 1;
+  vertical-align: -1px;
+}
+
+.section-badge .grill-sans {
+  font-size: 0.85em;
+  letter-spacing: 1.5px;
 }
 
 *, *::before, *::after {

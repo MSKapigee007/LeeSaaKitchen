@@ -40,19 +40,37 @@
 }
 
 .logo-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  line-height: 1;
+}
+
+.logo-text .leesas-script {
+  font-family: var(--font-brand-script);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+}
+
+.logo-text .grill-sans {
+  font-family: var(--font-brand-grill);
+  font-size: 0.92rem;
+  font-weight: 800;
   color: var(--primary);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
 }
 
 .logo-sub {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 600;
+  font-family: var(--font-brand-sub);
+  font-size: 0.62rem;
+  font-weight: 700;
   color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
+  margin-top: 1px;
 }
 
 .nav-menu {

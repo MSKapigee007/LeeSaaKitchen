@@ -1,6 +1,25 @@
 .page-hero { background: linear-gradient(135deg, #1a0a05 0%, #2d1810 100%); padding: 8rem 2rem 4rem; text-align: center; color: white; }
 .page-hero h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 1rem; }
 .highlight { color: var(--accent); }
+.brand-heading {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.brand-heading .leesas-script {
+  font-family: var(--font-brand-script);
+  font-size: 1.15em;
+  font-weight: 400;
+  color: var(--accent);
+}
+.brand-heading .grill-sans {
+  font-family: var(--font-brand-grill);
+  font-size: 0.62em;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--primary);
+  text-transform: uppercase;
+}
 .section-badge { display: inline-block; background: rgba(212,69,26,0.15); color: var(--accent); padding: 0.4rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
 .page-hero p { color: #bbb; font-size: 1.1rem; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }

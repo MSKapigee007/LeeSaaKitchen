@@ -30,8 +30,36 @@
   border-radius: 50%;
   padding: 2px;
 }
-.footer-logo .logo-text { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: white; }
-.footer-logo .logo-sub { font-size: 0.7rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; }
+.footer-logo .logo-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.footer-logo .logo-text .leesas-script {
+  font-family: var(--font-brand-script);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: white;
+}
+.footer-logo .logo-text .grill-sans {
+  font-family: var(--font-brand-grill);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.footer-logo .logo-sub {
+  font-family: var(--font-brand-sub);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: block;
+}
 .footer-desc { font-size: 0.9rem; line-height: 1.7; color: #aaa; margin-bottom: 1.5rem; }
 
 .social-links { display: flex; gap: 0.8rem; }
